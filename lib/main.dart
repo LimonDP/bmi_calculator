@@ -1,4 +1,4 @@
-import './widgets/bmi_widgets.dart';
+import './widgets/bmi_calculator.dart';
 import 'package:flutter/material.dart';
 
 void main() {

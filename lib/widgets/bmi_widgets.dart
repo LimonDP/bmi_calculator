@@ -49,25 +49,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                       width: 10,
                     ),
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(16.0)),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.female,
-                              size: 66.0,
-                            ),
-                            Text('Female',
-                                style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
+                      child: ExpandedContainer(),
                     )
                   ],
                 ),
@@ -251,6 +233,44 @@ class _BmiCalculatorState extends State<BmiCalculator> {
             ),
           ),
         )
+      ],
+    );
+  }
+}
+
+class ExpandedContainer extends StatelessWidget {
+  const ExpandedContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+        borderRadius: BorderRadius.only(topRight: Radius.circular(16.0)),
+      ),
+      child: ExpandedCard(),
+    );
+  }
+}
+
+class ExpandedCard extends StatelessWidget {
+  const ExpandedCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.female,
+          size: 66.0,
+        ),
+        Text('Female',
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
       ],
     );
   }
