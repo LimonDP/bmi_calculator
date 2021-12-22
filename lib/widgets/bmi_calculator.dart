@@ -8,18 +8,33 @@ class BmiCalculator extends StatefulWidget {
   _BmiCalculatorState createState() => _BmiCalculatorState();
 }
 
+enum GenderEnum {
+  FEMALE,
+  MALE,
+}
+
 class _BmiCalculatorState extends State<BmiCalculator> {
   double _currentSliderValue = 100.0;
-  static const Color activeColor = Colors.red;
-  static const Color inactiveColor = Colors.green;
+  static const Color activeColor = Color(0xFFF9116E);
+  static const Color inactiveColor = Color(0xFF282C4F);
   static var contColor = inactiveColor;
+  static var contColor1 = inactiveColor;
 
-  malebutton(int data) {
-    if (data == 1) {
+  malebutton(GenderEnum data) {
+    if (data == GenderEnum.FEMALE) {
+      contColor1 = inactiveColor;
       if (contColor == inactiveColor) {
         contColor = activeColor;
       } else {
         contColor = inactiveColor;
+      }
+    }
+    if (data == GenderEnum.MALE) {
+      contColor = inactiveColor;
+      if (contColor1 == inactiveColor) {
+        contColor1 = activeColor;
+      } else {
+        contColor1 = inactiveColor;
       }
     }
   }
@@ -38,7 +53,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        malebutton(1);
+                        malebutton(GenderEnum.FEMALE);
                       });
                     },
                     child: ExpandedContainer(
@@ -57,15 +72,24 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   width: 10,
                 ),
                 Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        malebutton(GenderEnum.MALE);
+                      });
+                    },
                     child: ExpandedContainer(
-                  containerData: ExpandedCard(
-                    cardText: 'FEMALE',
-                    icon: FontAwesomeIcons.venus,
+                      containerData: ExpandedCard(
+                        cardText: 'FEMALE',
+                        icon: FontAwesomeIcons.venus,
+                      ),
+                      containerheight: 150,
+                      containerColor: contColor1,
+                      borderRad:
+                          BorderRadius.only(topRight: Radius.circular(16.0)),
+                    ),
                   ),
-                  containerheight: 150,
-                  containerColor: Theme.of(context).backgroundColor,
-                  borderRad: BorderRadius.only(topRight: Radius.circular(16.0)),
-                )),
+                ),
               ],
             ),
           ),
