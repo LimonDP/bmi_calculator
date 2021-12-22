@@ -1,5 +1,8 @@
+import 'package:bmi_calculator/widgets/height_expanded.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'ageweight.dart';
 
 class BmiCalculator extends StatefulWidget {
   const BmiCalculator({Key? key}) : super(key: key);
@@ -14,14 +17,13 @@ enum GenderEnum {
 }
 
 class _BmiCalculatorState extends State<BmiCalculator> {
-  double _currentSliderValue = 100.0;
   static const Color activeColor = Color(0xFFF9116E);
   static const Color inactiveColor = Color(0xFF282C4F);
   static var contColor = inactiveColor;
   static var contColor1 = inactiveColor;
 
   malebutton(GenderEnum data) {
-    if (data == GenderEnum.FEMALE) {
+    if (data == GenderEnum.MALE) {
       contColor1 = inactiveColor;
       if (contColor == inactiveColor) {
         contColor = activeColor;
@@ -29,7 +31,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
         contColor = inactiveColor;
       }
     }
-    if (data == GenderEnum.MALE) {
+    if (data == GenderEnum.FEMALE) {
       contColor = inactiveColor;
       if (contColor1 == inactiveColor) {
         contColor1 = activeColor;
@@ -46,14 +48,14 @@ class _BmiCalculatorState extends State<BmiCalculator> {
       children: [
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               children: [
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        malebutton(GenderEnum.FEMALE);
+                        malebutton(GenderEnum.MALE);
                       });
                     },
                     child: ExpandedContainer(
@@ -61,7 +63,6 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                         cardText: 'MALE',
                         icon: FontAwesomeIcons.mars,
                       ),
-                      containerheight: 150,
                       containerColor: contColor,
                       borderRad:
                           BorderRadius.only(topLeft: Radius.circular(16.0)),
@@ -75,7 +76,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        malebutton(GenderEnum.MALE);
+                        malebutton(GenderEnum.FEMALE);
                       });
                     },
                     child: ExpandedContainer(
@@ -83,7 +84,6 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                         cardText: 'FEMALE',
                         icon: FontAwesomeIcons.venus,
                       ),
-                      containerheight: 150,
                       containerColor: contColor1,
                       borderRad:
                           BorderRadius.only(topRight: Radius.circular(16.0)),
@@ -96,33 +96,50 @@ class _BmiCalculatorState extends State<BmiCalculator> {
         ),
         Expanded(
           child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: ExpandedContainer(
-                  containerheight: 180,
-                  containerColor: Theme.of(context).backgroundColor)),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: ExpandedContainer(
+              containerColor: Theme.of(context).backgroundColor,
+              containerData: HeightExpanded(),
+            ),
+          ),
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               children: [
                 Expanded(
-                    child: ExpandedContainer(
-                        containerheight: 250,
-                        containerColor: Theme.of(context).backgroundColor)),
+                  child: ExpandedContainer(
+                    borderRad:
+                        BorderRadius.only(bottomLeft: Radius.circular(16.0)),
+                    containerColor: Theme.of(context).backgroundColor,
+                    containerData: AgeWeight(
+                      textValue: 'WEIGHT',
+                      integerValue: 50,
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: 10,
                 ),
                 Expanded(
                     child: ExpandedContainer(
-                        containerheight: 250,
+                        borderRad: BorderRadius.only(
+                            bottomRight: Radius.circular(16.0)),
+                        containerData: AgeWeight(
+                          textValue: 'AGE',
+                          integerValue: 22,
+                        ),
                         containerColor: Theme.of(context).backgroundColor)),
               ],
             ),
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
         Container(
-          height: 70,
+          height: 60,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Color(0xFFF9116E),
@@ -140,20 +157,15 @@ class _BmiCalculatorState extends State<BmiCalculator> {
 }
 
 class ExpandedContainer extends StatelessWidget {
-  final double containerheight;
   final Widget? containerData;
   final BorderRadiusGeometry? borderRad;
   final Color containerColor;
   const ExpandedContainer(
-      {required this.containerheight,
-      required this.containerColor,
-      this.containerData,
-      this.borderRad});
+      {required this.containerColor, this.containerData, this.borderRad});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: containerheight,
       decoration: BoxDecoration(
         color: containerColor,
         borderRadius: borderRad,
