@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HeightExpanded extends StatefulWidget {
-  const HeightExpanded({Key? key}) : super(key: key);
+  double height;
+  final Function heightF;
+  HeightExpanded({Key? key, required this.height, required this.heightF})
+      : super(key: key);
 
   @override
   _HeightExpandedState createState() => _HeightExpandedState();
 }
 
 class _HeightExpandedState extends State<HeightExpanded> {
-  double _currentSliderValue = 100.0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +19,7 @@ class _HeightExpandedState extends State<HeightExpanded> {
         Text('HEIGHT', style: TextStyle(fontSize: 27)),
         RichText(
           text: TextSpan(
-              text: _currentSliderValue.round().toString(),
+              text: widget.height.round().toString(),
               style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
               children: <TextSpan>[
                 TextSpan(text: 'cm', style: TextStyle(fontSize: 22))
@@ -31,15 +33,11 @@ class _HeightExpandedState extends State<HeightExpanded> {
                 trackHeight: 4,
                 thumbColor: Color(0xFFF4668E)),
             child: Slider(
-              value: _currentSliderValue,
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
-              max: 400,
+              value: widget.height,
+              onChanged: (double value) => widget.heightF(value),
+              max: 250,
               min: 0,
-              label: _currentSliderValue.round().toString(),
+              label: widget.height.round().toString(),
             ))
       ],
     );
